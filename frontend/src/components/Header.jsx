@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './Header.css';
 import AuthModal from './AuthModal';
-import Dashboard from './Dashboard';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -11,7 +10,6 @@ const Header = ({ viewMode, setViewMode, resetDashboard }) => {
 
     const [showAuthModal, setShowAuthModal] = useState(false);
     const [showProfileDropdown, setShowProfileDropdown] = useState(false);
-    const [showDashboard, setShowDashboard] = useState(false);
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -41,17 +39,6 @@ const Header = ({ viewMode, setViewMode, resetDashboard }) => {
             <header className="main-header">
                 <div className="header-container">
                     <div className="header-left">
-                        {location.pathname === '/features' && (
-                            <button
-                                className="hamburger-menu-btn"
-                                onClick={() => setShowDashboard(true)}
-                                aria-label="Open Dashboard"
-                            >
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </button>
-                        )}
                         <div className="logo">
                             <div className="logo-text-header">
                                 <span className="word-header scene-header">Scene</span>
@@ -138,13 +125,7 @@ const Header = ({ viewMode, setViewMode, resetDashboard }) => {
                 onAuthSuccess={handleAuthSuccess}
             />
 
-            <Dashboard
-                isOpen={showDashboard}
-                onClose={() => setShowDashboard(false)}
-                viewMode={viewMode}
-                setViewMode={setViewMode}
-                resetDashboard={resetDashboard}
-            />
+
         </>
     );
 };
