@@ -18,32 +18,35 @@
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 95%;
     margin: 0 auto;
     position: relative;
 }
 
-/* Header - Centered at Top */
+/* Header - Centered at Top - VERTICAL STACK */
 .section-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
     margin-bottom: 5rem;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
 }
 
 .subtitle-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1.2rem;
-    margin-bottom: 1.8rem;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
 }
 
 .decorative-line {
-    width: 70px;
+    width: 100px;
     height: 2px;
     background: linear-gradient(90deg, transparent, #ffd700, transparent);
+    flex-shrink: 0;
 }
 
 .subtitle {
@@ -52,6 +55,7 @@
     letter-spacing: 4px;
     font-size: 0.8rem;
     text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .section-title {
@@ -62,12 +66,13 @@
     display: block;
     text-align: center;
     width: 100%;
+    max-width: none;
 }
 
 .transform-word {
     color: #1a1a2e;
-    display: block;
-    margin-bottom: 0.3rem;
+    display: inline;
+    margin-bottom: 0;
 }
 
 .stories-word {
@@ -75,7 +80,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    display: block;
+    display: inline;
 }
 
 .section-description {
@@ -84,6 +89,9 @@
     max-width: 750px;
     margin: 0 auto;
     line-height: 1.9;
+    text-align: center;
+    display: block;
+    width: 100%;
 }
 
 /* Content Grid - Image Left, Card Right (Horizontal) */

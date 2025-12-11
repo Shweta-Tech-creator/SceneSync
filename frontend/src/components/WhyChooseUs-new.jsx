@@ -48,7 +48,8 @@ const WhyChooseUs = () => {
                         <div className="decorative-line"></div>
                     </div>
                     <h2 className="section-title">
-                        <span className="transform-word">Transform Your Ideas Into</span> <span className="stories-word">Stunning Visual Stories</span>
+                        <span className="transform-word">Transform Your Ideas Into</span>
+                        <span className="stories-word">Stunning Visual Stories</span>
                     </h2>
                     <p className="section-description">
                         SceneSync empowers creators, filmmakers, and storytellers to bring their visions to life
