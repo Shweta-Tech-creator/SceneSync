@@ -83,23 +83,18 @@
     line-height: 1.9;
 }
 
-/* Content Grid - Vertical Stack */
+/* Content Grid - Image Left, Card Right (Horizontal) */
 .content-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 4rem;
     align-items: center;
-    margin-top: 4rem;
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-top: 3rem;
 }
 
-/* Image - Centered, Smaller Height */
+/* Image - Left Side */
 .image-block {
     position: relative;
-    width: 100%;
-    max-width: 600px;
     animation: float 6s ease-in-out infinite;
 }
 
@@ -153,8 +148,6 @@
 
 /* Right Side - Glass Card */
 .content-card {
-    width: 100%;
-    max-width: 900px;
     background: rgba(255, 255, 255, 0.75);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
