@@ -59,6 +59,9 @@
     margin-bottom: 2rem;
     line-height: 1.25;
     font-weight: 800;
+    display: block;
+    text-align: center;
+    width: 100%;
 }
 
 .transform-word {
