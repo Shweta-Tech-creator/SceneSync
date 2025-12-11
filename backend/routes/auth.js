@@ -236,7 +236,7 @@ router.get('/google', passport.authenticate('google', {
 }));
 
 router.get('/google/callback',
-    passport.authenticate('google', { session: false, failureRedirect: 'http://localhost:5173/?error=auth_failed' }),
+    passport.authenticate('google', { session: false, failureRedirect: `${process.env.FRONTEND_URL}/?error=auth_failed` }),
     async (req, res) => {
         try {
             const { googleId, displayName, email, photo } = req.user;
@@ -271,11 +271,11 @@ router.get('/google/callback',
             const token = generateToken(user._id, user.email);
 
             // Redirect to frontend with token
-            res.redirect(`http://localhost:5173/auth/success?token=${token}&provider=google`);
+            res.redirect(`${process.env.FRONTEND_URL}/auth/success?token=${token}&provider=google`);
 
         } catch (error) {
             console.error('Google OAuth error:', error);
-            res.redirect('http://localhost:5173/?error=auth_failed');
+            res.redirect(`${process.env.FRONTEND_URL}/?error=auth_failed`);
         }
     }
 );
@@ -287,7 +287,7 @@ router.get('/github', passport.authenticate('github', {
 }));
 
 router.get('/github/callback',
-    passport.authenticate('github', { session: false, failureRedirect: 'http://localhost:5173/?error=auth_failed' }),
+    passport.authenticate('github', { session: false, failureRedirect: `${process.env.FRONTEND_URL}/?error=auth_failed` }),
     async (req, res) => {
         try {
             const { githubId, displayName, username, email, photo } = req.user;
@@ -322,11 +322,11 @@ router.get('/github/callback',
             const token = generateToken(user._id, user.email);
 
             // Redirect to frontend with token
-            res.redirect(`http://localhost:5173/auth/success?token=${token}&provider=github`);
+            res.redirect(`${process.env.FRONTEND_URL}/auth/success?token=${token}&provider=github`);
 
         } catch (error) {
             console.error('GitHub OAuth error:', error);
-            res.redirect('http://localhost:5173/?error=auth_failed');
+            res.redirect(`${process.env.FRONTEND_URL}/?error=auth_failed`);
         }
     }
 );

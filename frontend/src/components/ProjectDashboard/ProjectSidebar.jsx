@@ -12,7 +12,7 @@ const ProjectSidebar = ({ project, currentUser }) => {
 
     // Initialize Socket.io connection
     useEffect(() => {
-        const newSocket = io('http://localhost:3000');
+        const newSocket = io(import.meta.env.VITE_API_URL);
         setSocket(newSocket);
 
         return () => newSocket.close();
@@ -43,7 +43,7 @@ const ProjectSidebar = ({ project, currentUser }) => {
         if (!project) return;
 
         try {
-            const response = await fetch(`http://localhost:3000/api/projects/${project._id}/comments`);
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/projects/${project._id}/comments`);
             const data = await response.json();
             if (data.success) {
                 setComments(data.comments);
@@ -57,7 +57,7 @@ const ProjectSidebar = ({ project, currentUser }) => {
         if (!comment.trim() || !project || !currentUser) return;
 
         try {
-            const response = await fetch(`http://localhost:3000/api/projects/${project._id}/comments`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/projects/${project._id}/comments`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ const ProjectSidebar = ({ project, currentUser }) => {
                     projectId: project._id
                 });
 
-                const response = await fetch('http://localhost:3000/api/invitations/send-invitation', {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/invitations/send-invitation`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

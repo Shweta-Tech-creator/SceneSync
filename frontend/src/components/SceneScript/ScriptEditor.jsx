@@ -38,7 +38,7 @@ const ScriptEditor = ({ projectId, onBack }) => {
 
         const fetchProject = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/projects?userId=${user._id}`);
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/projects?userId=${user._id}`);
                 const data = await response.json();
                 console.log('ScriptEditor: Fetched projects:', data);
 
@@ -106,7 +106,7 @@ const ScriptEditor = ({ projectId, onBack }) => {
     useEffect(() => {
         if (!projectId) return;
 
-        const newSocket = io('http://localhost:3000');
+        const newSocket = io(import.meta.env.VITE_API_URL);
         setSocket(newSocket);
 
         newSocket.on('connect', () => {
@@ -134,7 +134,7 @@ const ScriptEditor = ({ projectId, onBack }) => {
 
         const fetchScript = async () => {
             try {
-                const res = await fetch(`http://localhost:3000/api/scripts/${projectId}`);
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/api/scripts/${projectId}`);
                 const data = await res.json();
                 console.log('ScriptEditor: Loaded script data:', data);
 
@@ -155,7 +155,7 @@ const ScriptEditor = ({ projectId, onBack }) => {
 
         const fetchStoryboard = async () => {
             try {
-                const res = await fetch(`http://localhost:3000/api/storyboards/${projectId}`);
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/api/storyboards/${projectId}`);
                 const data = await res.json();
                 if (data.success && data.storyboard && data.storyboard.pages) {
                     console.log('ScriptEditor: Loaded storyboard pages:', data.storyboard.pages);
@@ -183,7 +183,7 @@ const ScriptEditor = ({ projectId, onBack }) => {
 
         const fetchComments = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/projects/${projectId}/comments`);
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/projects/${projectId}/comments`);
                 const data = await response.json();
                 if (data.success) {
                     setComments(data.comments);
@@ -200,7 +200,7 @@ const ScriptEditor = ({ projectId, onBack }) => {
         if (!projectId || !user) return;
 
         try {
-            const response = await fetch(`http://localhost:3000/api/projects/${projectId}/comments`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/projects/${projectId}/comments`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -407,7 +407,7 @@ const ScriptEditor = ({ projectId, onBack }) => {
         console.log('ScriptEditor: Pages to save:', pages);
 
         try {
-            const response = await fetch(`http://localhost:3000/api/scripts/${projectId}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/scripts/${projectId}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 method: 'POST',

@@ -30,14 +30,14 @@ const ShotSequenceEditor = ({ project, onBack }) => {
         const fetchData = async () => {
             try {
                 // Fetch Storyboard Pages
-                const sbResponse = await fetch(`http://localhost:3000/api/storyboards/${project._id}`);
+                const sbResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/storyboards/${project._id}`);
                 const sbData = await sbResponse.json();
                 if (sbData.success && sbData.storyboard) {
                     setStoryboardPages(sbData.storyboard.pages || []);
                 }
 
                 // Fetch Script
-                const scriptResponse = await fetch(`http://localhost:3000/api/scripts/${project._id}`);
+                const scriptResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/scripts/${project._id}`);
                 const scriptData = await scriptResponse.json();
                 if (scriptData.success && scriptData.script && scriptData.script.pages) {
                     // Flatten blocks from all pages
@@ -52,7 +52,7 @@ const ShotSequenceEditor = ({ project, onBack }) => {
                 }
 
                 // Fetch Existing Sequence
-                const seqResponse = await fetch(`http://localhost:3000/api/shot-sequence/${project._id}`);
+                const seqResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/shot-sequence/${project._id}`);
                 const seqData = await seqResponse.json();
                 if (seqData.success && seqData.sequence) {
                     setFrames(seqData.sequence.frames || []);
@@ -75,8 +75,8 @@ const ShotSequenceEditor = ({ project, onBack }) => {
 
         try {
             const url = sequenceId
-                ? `http://localhost:3000/api/shot-sequence/${sequenceId}`
-                : 'http://localhost:3000/api/shot-sequence/create';
+                ? `${import.meta.env.VITE_API_URL}/api/shot-sequence/${sequenceId}`
+                : `${import.meta.env.VITE_API_URL}/api/shot-sequence/create`;
 
             const method = sequenceId ? 'PUT' : 'POST';
             const body = sequenceId

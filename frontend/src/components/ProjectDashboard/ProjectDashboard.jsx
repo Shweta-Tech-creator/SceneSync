@@ -40,7 +40,7 @@ const ProjectDashboard = ({ onProjectSelect }) => {
     const refetchSelectedProject = async () => {
         if (!selectedProject) return;
         try {
-            const response = await fetch(`http://localhost:3000/api/projects?userId=${user._id}`);
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/projects?userId=${user._id}`);
             const data = await response.json();
             if (data.success) {
                 const updatedProject = data.projects.find(p => p._id === selectedProject._id);
@@ -55,7 +55,7 @@ const ProjectDashboard = ({ onProjectSelect }) => {
 
     const fetchProjects = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/api/projects?userId=${user._id}`);
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/projects?userId=${user._id}`);
             const data = await response.json();
             if (data.success) {
                 setProjects(data.projects);
@@ -71,7 +71,7 @@ const ProjectDashboard = ({ onProjectSelect }) => {
         try {
             console.log('Creating project with data:', { ...projectData, ownerId: user._id });
 
-            const response = await fetch('http://localhost:3000/api/projects', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/projects`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ const ProjectDashboard = ({ onProjectSelect }) => {
 
     const handleDeleteProject = async (projectId) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/projects/${projectId}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/projects/${projectId}`, {
                 method: 'DELETE',
             });
 

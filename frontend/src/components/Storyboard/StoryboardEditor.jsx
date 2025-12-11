@@ -52,7 +52,7 @@ const StoryboardEditor = ({ storyboardId: initialStoryboardId, project, onBack }
 
     useEffect(() => {
         console.log('StoryboardEditor useEffect - initializing socket');
-        const newSocket = io('http://localhost:3000');
+        const newSocket = io(import.meta.env.VITE_API_URL);
         setSocket(newSocket);
 
         newSocket.on('connect', () => {
@@ -93,7 +93,7 @@ const StoryboardEditor = ({ storyboardId: initialStoryboardId, project, onBack }
 
         const fetchStoryboard = async () => {
             try {
-                const res = await fetch(`http://localhost:3000/api/storyboards/${storyboardId}`);
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/api/storyboards/${storyboardId}`);
                 const data = await res.json();
                 if (data.success && data.storyboard && data.storyboard.pages && data.storyboard.pages.length > 0) {
                     console.log('StoryboardEditor: Loaded pages:', data.storyboard.pages);
@@ -117,7 +117,7 @@ const StoryboardEditor = ({ storyboardId: initialStoryboardId, project, onBack }
 
         const fetchComments = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/projects/${project._id}/comments`);
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/projects/${project._id}/comments`);
                 const data = await response.json();
                 if (data.success) {
                     setComments(data.comments);
@@ -134,7 +134,7 @@ const StoryboardEditor = ({ storyboardId: initialStoryboardId, project, onBack }
         if (!project?._id || !user) return;
 
         try {
-            const response = await fetch(`http://localhost:3000/api/projects/${project._id}/comments`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/projects/${project._id}/comments`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -167,7 +167,7 @@ const StoryboardEditor = ({ storyboardId: initialStoryboardId, project, onBack }
             if (saveColor) {
                 payload.defaultColor = color;
             }
-            await fetch(`http://localhost:3000/api/storyboards/${storyboardId}`, {
+            await fetch(`${import.meta.env.VITE_API_URL}/api/storyboards/${storyboardId}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
@@ -184,7 +184,7 @@ const StoryboardEditor = ({ storyboardId: initialStoryboardId, project, onBack }
 
         const saveColor = async () => {
             try {
-                await fetch(`http://localhost:3000/api/storyboards/${storyboardId}`, {
+                await fetch(`${import.meta.env.VITE_API_URL}/api/storyboards/${storyboardId}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ defaultColor: color })

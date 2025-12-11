@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
                 try {
                     console.log('Making profile API call...');
                     // Verify token with backend
-                    const res = await axios.get('http://localhost:3000/api/auth/profile');
+                    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/profile`);
                     console.log('Profile API response:', res.data);
                     if (res.data.success) {
                         console.log('Profile fetch success', res.data.user);
@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-            const res = await axios.post('http://localhost:3000/api/auth/login', { email, password });
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, { email, password });
             const { token, user } = res.data;
 
             localStorage.setItem('token', token);
@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }) => {
     const signup = async (name, email, password, role) => {
         try {
             // Note: Backend expects 'username', but frontend form sends 'name'
-            const res = await axios.post('http://localhost:3000/api/auth/register', {
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
                 username: name,
                 email,
                 password,
@@ -96,11 +96,11 @@ export const AuthProvider = ({ children }) => {
     };
 
     const loginWithGoogle = () => {
-        window.location.href = 'http://localhost:3000/api/auth/google';
+        window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
     };
 
     const loginWithGithub = () => {
-        window.location.href = 'http://localhost:3000/api/auth/github';
+        window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/github`;
     };
 
     const loginWithToken = (token) => {

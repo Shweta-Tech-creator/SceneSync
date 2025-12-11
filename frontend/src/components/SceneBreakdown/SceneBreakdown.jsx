@@ -12,7 +12,7 @@ const SceneBreakdown = ({ onBack }) => {
 
         setIsAnalyzing(true);
         try {
-            const response = await fetch('http://localhost:3000/api/breakdown/analyze', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/breakdown/analyze`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ text: inputText })

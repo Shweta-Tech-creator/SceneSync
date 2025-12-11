@@ -23,7 +23,7 @@ const Sidebar = ({ collaborators, comments, onAddComment, project }) => {
     const handleInviteCollaborator = async () => {
         if (inviteEmail.trim()) {
             try {
-                const response = await fetch('http://localhost:3000/api/invitations/send-invitation', {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/invitations/send-invitation`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
