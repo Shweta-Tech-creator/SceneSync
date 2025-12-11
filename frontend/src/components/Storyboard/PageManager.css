@@ -1,0 +1,180 @@
+.page-manager {
+    width: 200px;
+    background: #1e293b;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.page-manager-header {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.page-manager-header h3 {
+    color: #ffffff;
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.add-page-btn {
+    width: 100%;
+    background: rgba(255, 215, 0, 0.1);
+    color: #ffd700;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    padding: 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.add-page-btn:hover {
+    background: #ffd700;
+    color: #0B2545;
+}
+
+.pages-list {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.page-thumbnail {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.page-thumbnail:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 215, 0, 0.3);
+}
+
+.page-thumbnail.active {
+    background: rgba(255, 215, 0, 0.1);
+    border-color: #ffd700;
+}
+
+.delete-page-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: rgba(239, 68, 68, 0.9);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.page-thumbnail:hover .delete-page-btn {
+    opacity: 1;
+}
+
+.delete-page-btn:hover {
+    background: rgba(239, 68, 68, 1);
+    transform: scale(1.1);
+}
+
+.page-preview {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: #ffffff;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.page-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.page-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+}
+
+.page-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0B2545;
+}
+
+.page-label {
+    color: #ffffff;
+    text-align: center;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.page-actions-storyboard {
+    display: flex;
+    gap: 4px;
+    margin-top: 0.5rem;
+    justify-content: center;
+}
+
+.page-action-btn-storyboard {
+    background: #475569;
+    border: 1px solid #334155;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.page-action-btn-storyboard:hover:not(:disabled) {
+    background: #ffd700;
+    border-color: #ffc107;
+    color: #0B2545;
+    transform: scale(1.1);
+}
+
+.page-action-btn-storyboard.delete {
+    background: #dc2626;
+    border-color: #b91c1c;
+}
+
+.page-action-btn-storyboard.delete:hover:not(:disabled) {
+    background: #ef4444;
+    border-color: #dc2626;
+}
+
+.page-action-btn-storyboard:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: #64748b;
+    border-color: #475569;
+}

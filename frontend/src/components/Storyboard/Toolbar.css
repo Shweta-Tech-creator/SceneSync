@@ -1,0 +1,126 @@
+.toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #0B2545;
+    padding: 1rem 2rem;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+}
+
+.toolbar-left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.back-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(-2px);
+}
+
+.toolbar-title {
+    color: #ffffff;
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.toolbar-center {
+    display: flex;
+    gap: 0.5rem;
+    flex: 2;
+    justify-content: center;
+}
+
+.tool-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tool-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.tool-btn.active {
+    background: #ffd700;
+    color: #0B2545;
+    border-color: #ffd700;
+}
+
+.tool-icon {
+    font-size: 1.2rem;
+}
+
+.tool-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.toolbar-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.color-picker-label {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.color-picker {
+    width: 50px;
+    height: 35px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.save-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #FFD447;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    color: #0f172a;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-right: 16px;
+}
+
+.save-btn:hover {
+    background: #e6be3f;
+    transform: translateY(-1px);
+}
+
+.divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 0 16px;
+}

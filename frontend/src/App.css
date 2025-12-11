@@ -1,0 +1,54 @@
+.main-app {
+    min-height: 100vh;
+    background: #ffffff;
+    color: #1a1a1a;
+}
+
+.app-header {
+    padding: 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #000000;
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+}
+
+.app-header h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.app-header p {
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.app-content {
+    padding: 3rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.welcome-section {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 165, 0, 0.1) 100%);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-section h2 {
+    font-size: 2.5rem;
+    color: #000000;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.welcome-section p {
+    font-size: 1.3rem;
+    color: #4a4a4a;
+    font-weight: 500;
+}

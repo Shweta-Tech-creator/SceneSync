@@ -1,0 +1,716 @@
+/* Project Dashboard Layout - Premium Navy Blue Theme */
+.project-dashboard {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 60px);
+    margin-top: 60px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    overflow: hidden;
+    color: #e2e8f0;
+    font-family: 'Inter', sans-serif;
+}
+
+.project-dashboard .dashboard-main {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.05), transparent 40%);
+    margin-right: 400px;
+    /* Space for fixed sidebar */
+}
+
+.project-dashboard .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+.project-dashboard .dashboard-title h1 {
+    font-size: 2.5rem;
+    background: linear-gradient(to right, #ffffff, #94a3b8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.project-dashboard .dashboard-title p {
+    color: #94a3b8;
+    margin: 0.5rem 0 0 0;
+    font-size: 1.1rem;
+}
+
+.project-dashboard .create-project-btn {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    border: none;
+    padding: 0.875rem 1.75rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2), 0 2px 4px -1px rgba(37, 99, 235, 0.1);
+}
+
+.project-dashboard .create-project-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3), 0 4px 6px -2px rgba(37, 99, 235, 0.15);
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+}
+
+/* Project Grid */
+.project-dashboard .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* Project Card */
+.project-dashboard .project-card {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-dashboard .project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+    border-color: rgba(59, 130, 246, 0.5);
+    background: rgba(30, 41, 59, 0.9);
+}
+
+.project-dashboard .project-card.selected {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+.project-dashboard .card-image {
+    height: 180px;
+    background: #0f172a;
+    position: relative;
+    overflow: hidden;
+}
+
+.project-dashboard .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    transform: scale(1.05);
+}
+
+.project-dashboard .card-status {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.project-dashboard .status-draft {
+    background: rgba(148, 163, 184, 0.9);
+    color: #0f172a;
+}
+
+.project-dashboard .status-inprogress {
+    background: rgba(59, 130, 246, 0.9);
+    color: white;
+}
+
+.project-dashboard .status-completed {
+    background: rgba(34, 197, 94, 0.9);
+    color: white;
+}
+
+.project-dashboard .card-content {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-dashboard .card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin: 0 0 0.75rem 0;
+    line-height: 1.4;
+}
+
+.project-dashboard .card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+    color: #94a3b8;
+    margin-bottom: 1.5rem;
+}
+
+.project-dashboard .card-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: auto;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    opacity: 0.6;
+    transition: opacity 0.3s;
+}
+
+.project-dashboard .project-card:hover .card-actions {
+    opacity: 1;
+}
+
+.project-dashboard .action-btn {
+    flex: 1;
+    padding: 0.625rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #cbd5e1;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.project-dashboard .action-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.project-dashboard .edit-btn {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    border: none;
+    font-weight: 600;
+}
+
+.project-dashboard .edit-btn:hover {
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+}
+
+/* Right Sidebar */
+.project-dashboard .project-sidebar {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 400px;
+    background: rgba(15, 23, 42, 0.95);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(20px);
+    z-index: 10;
+}
+
+/* Sidebar Sections */
+.project-dashboard .section-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.project-dashboard .section-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #f1f5f9;
+    font-weight: 700;
+}
+
+.project-dashboard .invite-btn {
+    background: rgba(59, 130, 246, 0.1);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+}
+
+.project-dashboard .invite-btn:hover {
+    background: rgba(59, 130, 246, 0.2);
+    transform: translateY(-1px);
+}
+
+.project-dashboard .collaborators-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.project-dashboard .collaborator-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.project-dashboard .collaborator-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.project-dashboard .collaborator-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: white;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.project-dashboard .collaborator-info {
+    flex: 1;
+}
+
+.project-dashboard .collaborator-name {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+}
+
+.project-dashboard .collaborator-status {
+    color: #94a3b8;
+    font-size: 0.75rem;
+}
+
+/* Comments Section */
+.project-dashboard .comments-list {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.project-dashboard .comment-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 3px solid #3b82f6;
+    transition: all 0.2s;
+}
+
+.project-dashboard .comment-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.project-dashboard .comment-author {
+    color: #60a5fa;
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+}
+
+.project-dashboard .comment-text {
+    color: #ffffff;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+}
+
+.project-dashboard .comment-time {
+    color: #94a3b8;
+    font-size: 0.75rem;
+}
+
+.project-dashboard .comment-input-area {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.project-dashboard .comment-input-area input {
+    flex: 1;
+    padding: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.project-dashboard .comment-input-area input:focus {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #3b82f6;
+}
+
+.project-dashboard .send-comment-btn {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    border: none;
+    padding: 0 1.25rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+}
+
+.project-dashboard .send-comment-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+}
+
+.project-dashboard .sidebar-header {
+    padding: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(15, 23, 42, 0.5);
+}
+
+.project-dashboard .sidebar-header h2 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+    color: #f1f5f9;
+    font-weight: 700;
+}
+
+.project-dashboard .sidebar-section {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.project-dashboard .section-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.project-dashboard .invite-btn-sm {
+    background: rgba(59, 130, 246, 0.1);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.project-dashboard .invite-btn-sm:hover {
+    background: rgba(59, 130, 246, 0.2);
+}
+
+.project-dashboard .collaborator-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.project-dashboard .collaborator-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.project-dashboard .collaborator-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.project-dashboard .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: white;
+    font-size: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.project-dashboard .collab-info {
+    flex: 1;
+}
+
+.project-dashboard .collab-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #f1f5f9;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.project-dashboard .collab-role {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.project-dashboard .online-status {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #475569;
+    box-shadow: 0 0 0 2px #0f172a;
+}
+
+.project-dashboard .online-status.active {
+    background: #22c55e;
+    box-shadow: 0 0 0 2px #0f172a, 0 0 8px rgba(34, 197, 94, 0.5);
+}
+
+/* Modal - Scoped to avoid conflicts */
+.project-dashboard-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.project-dashboard-modal-content {
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    padding: 2.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-dashboard-modal-content h2 {
+    color: #f1f5f9;
+    margin-top: 0;
+    margin-bottom: 2rem;
+    font-size: 1.75rem;
+}
+
+/* Modal Internal Styles - Scoped to modal content since it's in a portal */
+.project-dashboard-modal-content .role-description {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-left: 4px solid #3b82f6;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.project-dashboard-modal-content .role-description p {
+    margin: 0;
+    color: #e2e8f0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.project-dashboard-modal-content .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.project-dashboard-modal-content .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.project-dashboard-modal-content .form-group input,
+.project-dashboard-modal-content .form-group select {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    font-size: 1rem;
+    color: white;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    appearance: none;
+    /* Remove default arrow */
+    -webkit-appearance: none;
+}
+
+/* Custom arrow for select */
+.project-dashboard-modal-content .form-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.25rem;
+    padding-right: 2.5rem;
+}
+
+.project-dashboard-modal-content .form-group input:focus,
+.project-dashboard-modal-content .form-group select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background: rgba(15, 23, 42, 0.8);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.project-dashboard-modal-content .modal-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.project-dashboard-modal-content .btn-cancel {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.875rem;
+    border-radius: 10px;
+    font-weight: 600;
+    color: #cbd5e1;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.project-dashboard-modal-content .btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: white;
+}
+
+.project-dashboard-modal-content .btn-submit {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    border: none;
+    padding: 0.875rem;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+    text-align: center;
+}
+
+.project-dashboard-modal-content .btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+    filter: brightness(1.1);
+}
+
+/* Empty State */
+.project-dashboard .empty-state {
+    text-align: center;
+    padding: 6rem 2rem;
+    background: rgba(30, 41, 59, 0.3);
+    border-radius: 16px;
+    border: 2px dashed rgba(255, 255, 255, 0.1);
+    margin: 2rem 0;
+}
+
+.project-dashboard .empty-state h3 {
+    color: #f1f5f9;
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+}
+
+.project-dashboard .empty-state p {
+    color: #94a3b8;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Scrollbar - Scoped */
+.project-dashboard ::-webkit-scrollbar {
+    width: 8px;
+}
+
+.project-dashboard ::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.project-dashboard ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.project-dashboard ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}

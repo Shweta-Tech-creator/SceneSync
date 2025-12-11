@@ -1,0 +1,395 @@
+:root {
+    --primary-black: #000000;
+    --primary-yellow: #FFD700;
+    --secondary-yellow: #FFA500;
+    --accent-gold: #FDB931;
+    --bg-white: #ffffff;
+}
+
+.splash-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--bg-white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    z-index: 9999;
+    perspective: 1000px;
+    animation: slideUpExit 0.8s cubic-bezier(0.7, 0, 0.3, 1) 4.5s forwards;
+}
+
+/* Background Effects */
+.grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0;
+    animation: fadeInGrid 1s ease-out forwards;
+    transform-origin: center;
+}
+
+.radial-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0;
+    animation: rotateGlow 10s linear infinite, pulseGlow 3s ease-in-out infinite;
+}
+
+.glow-1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.15), transparent 70%);
+    top: -10%;
+    left: -10%;
+    animation-delay: 0.5s;
+}
+
+.glow-2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 165, 0, 0.1), transparent 70%);
+    bottom: -10%;
+    right: -10%;
+    animation-delay: 1s;
+}
+
+.glow-3 {
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(253, 185, 49, 0.05), transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Logo Container */
+.logo-container {
+    position: relative;
+    transform-style: preserve-3d;
+    z-index: 10;
+}
+
+.logo-text {
+    font-family: 'Inter', sans-serif;
+    /* Assuming Inter or system font */
+    font-size: 5rem;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -2px;
+    display: flex;
+    gap: 10px;
+    opacity: 0;
+    animation: logoEntrance 2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s forwards;
+}
+
+.word {
+    display: inline-block;
+    position: relative;
+}
+
+.word.scene {
+    color: #0f172a;
+    text-shadow: 2px 2px 0px rgba(255, 215, 0, 0.3);
+    animation: floatBob 3s ease-in-out infinite;
+}
+
+.word.sync {
+    background: linear-gradient(135deg, var(--primary-yellow) 0%, var(--secondary-yellow) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(2px 2px 0px rgba(0, 0, 0, 0.1));
+    animation: floatBob 3.5s ease-in-out infinite 0.2s;
+}
+
+/* Light Streak */
+.light-streak-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150%;
+    height: 100px;
+    transform: translate(-50%, -50%) rotate(-5deg);
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.light-streak {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary-yellow), transparent);
+    transform: translateX(-100%);
+    animation: streakShoot 2s cubic-bezier(0.4, 0, 0.2, 1) 1.5s forwards;
+    filter: blur(1px);
+}
+
+.light-streak-glow {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.4), transparent);
+    transform: translateY(-50%) translateX(-100%);
+    animation: streakShoot 2s cubic-bezier(0.4, 0, 0.2, 1) 1.5s forwards;
+    filter: blur(10px);
+}
+
+/* Particles */
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    animation: particleFloat 4s ease-in-out infinite;
+}
+
+.particle-1 {
+    width: 10px;
+    height: 10px;
+    background: var(--primary-yellow);
+    top: -20px;
+    left: 20%;
+    animation-delay: 1.2s;
+}
+
+.particle-2 {
+    width: 15px;
+    height: 15px;
+    background: var(--secondary-yellow);
+    top: 50%;
+    right: -30px;
+    animation-delay: 1.5s;
+}
+
+.particle-3 {
+    width: 8px;
+    height: 8px;
+    background: var(--primary-black);
+    bottom: -20px;
+    left: 40%;
+    animation-delay: 1.8s;
+}
+
+.particle-4 {
+    width: 12px;
+    height: 12px;
+    background: var(--accent-gold);
+    top: -40px;
+    right: 20%;
+    animation-delay: 2.0s;
+}
+
+.particle-5 {
+    width: 6px;
+    height: 6px;
+    background: var(--primary-black);
+    bottom: 20%;
+    left: -20px;
+    animation-delay: 2.2s;
+}
+
+/* Tagline */
+.tagline {
+    position: absolute;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--primary-black);
+    opacity: 0;
+    white-space: nowrap;
+    animation: fadeInUp 1s ease-out 2.2s forwards;
+    background: linear-gradient(90deg, #000 0%, #555 50%, #000 100%);
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fadeInUp 1s ease-out 2.2s forwards, shimmerText 3s linear infinite 2.2s;
+}
+
+/* Film Strip */
+.film-strip-decoration {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    opacity: 0;
+    animation: fadeIn 1s ease-out 2s forwards;
+}
+
+.film-hole {
+    width: 40px;
+    height: 25px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    animation: pulseHole 2s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes slideUpExit {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
+@keyframes fadeInGrid {
+    0% {
+        opacity: 0;
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes rotateGlow {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1.1);
+    }
+}
+
+@keyframes logoEntrance {
+    0% {
+        opacity: 0;
+        transform: scale(0.2) rotateX(30deg) rotateY(180deg);
+    }
+
+    60% {
+        transform: scale(1.2) rotateX(0) rotateY(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) rotateX(0) rotateY(0);
+    }
+}
+
+@keyframes floatBob {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes streakShoot {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    50% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes particleFloat {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: translateY(-20px) scale(1.2);
+    }
+
+    80% {
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 0;
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+@keyframes shimmerText {
+    to {
+        background-position: 200% center;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes pulseHole {
+
+    0%,
+    100% {
+        background: rgba(0, 0, 0, 0.05);
+    }
+
+    50% {
+        background: rgba(255, 215, 0, 0.2);
+    }
+}

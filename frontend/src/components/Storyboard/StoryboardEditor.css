@@ -1,0 +1,13 @@
+.storyboard-editor {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px);
+    margin-top: 60px;
+    background: #0f172a;
+}
+
+.storyboard-main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}

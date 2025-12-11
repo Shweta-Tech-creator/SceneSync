@@ -1,0 +1,310 @@
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    z-index: 100;
+    border-bottom: 1px solid rgba(11, 15, 40, 0.04);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.header-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 0.3rem 4rem;
+    /* Minimal padding */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Header Left Section with Hamburger and Logo */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+/* Hamburger Menu Button */
+.hamburger-menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 8px;
+}
+
+.hamburger-menu-btn:hover {
+    background: rgba(11, 15, 40, 0.05);
+}
+
+.hamburger-menu-btn span {
+    display: block;
+    width: 24px;
+    height: 3px;
+    background: var(--primary-dark);
+    border-radius: 2px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hamburger-menu-btn:hover span {
+    background: var(--primary-yellow);
+}
+
+.hamburger-menu-btn:hover span:nth-child(1) {
+    transform: translateX(-3px);
+}
+
+.hamburger-menu-btn:hover span:nth-child(3) {
+    transform: translateX(3px);
+}
+
+
+/* Logo Styles Matching Splash Screen */
+.logo-text-header {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.8px;
+    display: flex;
+    gap: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.logo-text-header:hover {
+    transform: scale(1.02);
+}
+
+.word-header {
+    display: inline-block;
+    position: relative;
+}
+
+.word-header.scene-header {
+    color: var(--primary-dark);
+}
+
+.word-header.sync-header {
+    background: linear-gradient(135deg, var(--primary-yellow) 0%, #FFA500 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0px 2px 4px rgba(255, 212, 71, 0.2));
+}
+
+.main-nav {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--primary-dark);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: -0.2px;
+    position: relative;
+    padding-bottom: 4px;
+    display: inline-block;
+    /* Required for transform */
+}
+
+/* Animated Underline: Center Out */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: var(--primary-yellow);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link:hover {
+    color: var(--primary-yellow);
+    /* Color change */
+    transform: scale(1.03);
+    /* Scale pop */
+}
+
+.nav-link:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.btn-primary-sm {
+    background: var(--primary-dark);
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(11, 15, 40, 0.15);
+}
+
+.btn-primary-sm:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 0 20px rgba(255, 212, 71, 0.4);
+    /* Soft yellow glow */
+    background: #1a1f3a;
+}
+
+@media (max-width: 1100px) {
+    .main-nav {
+        display: none;
+    }
+
+    .header-container {
+        padding: 1rem 2rem;
+    }
+}
+
+/* Profile Dropdown Styles */
+.profile-menu-container {
+    position: relative;
+}
+
+.profile-icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.profile-icon-btn:hover {
+    transform: scale(1.05);
+}
+
+.profile-avatar-placeholder {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--primary-yellow);
+    color: var(--primary-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-avatar-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: 120%;
+    right: 0;
+    width: 280px;
+    background: #0B2545;
+    border-radius: 16px;
+    box-shadow:
+        0 10px 25px -5px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    animation: slideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    transform-origin: top right;
+    z-index: 1000;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.profile-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.profile-name {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+.profile-email {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+}
+
+.profile-role-badge {
+    background: rgba(255, 215, 0, 0.15);
+    color: #ffd700;
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.profile-footer {
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-logout-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dropdown-logout-btn:hover {
+    background: #ef4444;
+    color: #ffffff;
+    transform: translateY(-1px);
+}

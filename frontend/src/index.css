@@ -1,0 +1,40 @@
+:root {
+  --primary-dark: #0B0F28;
+  --primary-yellow: #FFD447;
+  --text-white: #ffffff;
+  --text-gray: #a0a0a0;
+  --primary-blue: #3880ff;
+  /* Keeping for legacy or secondary use if needed */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #ffffff;
+  color: var(--primary-dark);
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  /* Prevent horizontal scroll */
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
