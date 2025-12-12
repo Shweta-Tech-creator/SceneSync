@@ -25,23 +25,28 @@ router.use((req, res, next) => {
     next();
 });
 
-// Send invitation email
 router.post('/send-invitation', async (req, res) => {
     console.log('[DEBUG] Matched /send-invitation route handler!');
     try {
         const { email, inviterName, projectName, projectId, role } = req.body;
+        console.log('[DEBUG] Request body:', { email, projectId, role });
 
         if (!email || !projectId) {
+            console.log('[DEBUG] Missing email or projectId');
             return res.status(400).json({ success: false, message: 'Email and project ID are required' });
         }
 
         // Find the project
+        console.log('[DEBUG] Finding project:', projectId);
         const project = await Project.findById(projectId);
         if (!project) {
+            console.log('[DEBUG] Project not found');
             return res.status(404).json({ success: false, message: 'Project not found' });
         }
+        console.log('[DEBUG] Project found:', project.title);
 
         // Create invitation record
+        console.log('[DEBUG] Creating invitation record');
         const invitation = new Invitation({
             email,
             project: projectId,
@@ -50,6 +55,7 @@ router.post('/send-invitation', async (req, res) => {
         });
 
         await invitation.save();
+        console.log('[DEBUG] Invitation saved to DB');
 
         const transporter = createTransporter();
         const acceptUrl = `${process.env.FRONTEND_URL || 'http://localhost:5174'}/accept-invitation/${invitation.token}`;
@@ -103,7 +109,9 @@ router.post('/send-invitation', async (req, res) => {
             `
         };
 
+        console.log('[DEBUG] Sending email...');
         await transporter.sendMail(mailOptions);
+        console.log('[DEBUG] Email sent successfully');
 
         res.json({
             success: true,
