@@ -65,7 +65,10 @@ export const AuthProvider = ({ children }) => {
     const signup = async (name, email, password, role) => {
         try {
             // Note: Backend expects 'username', but frontend form sends 'name'
-            const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
+            const apiUrl = `${import.meta.env.VITE_API_URL}/api/auth/register`;
+            console.log('Attempting signup to URL:', apiUrl);
+
+            const res = await axios.post(apiUrl, {
                 username: name,
                 email,
                 password,
