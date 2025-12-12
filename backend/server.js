@@ -8,6 +8,7 @@ require('dotenv').config();
 const authRoutes = require('./routes/auth');
 const invitationsRoutes = require('./routes/invitations');
 const statsRoutes = require('./routes/stats');
+const uploadRoutes = require('./routes/upload');
 
 // Import passport config
 require('./config/passport');
@@ -45,6 +46,10 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(passport.initialize());
 
+// Serve static files from uploads directory
+const path = require('path');
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // DB Connection
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/scenecraft')
     .then(() => console.log('MongoDB Connected to scenecraft database'))
@@ -58,6 +63,7 @@ app.use('/api/invitations', (req, res, next) => {
     next();
 }, invitationsRoutes);
 app.use('/api/stats', statsRoutes);
+app.use('/api/upload', uploadRoutes);
 app.use('/api/projects', require('./routes/projects'));
 app.use('/api/scripts', require('./routes/scriptRoutes'));
 app.use('/api/breakdown', require('./routes/breakdownRoutes'));

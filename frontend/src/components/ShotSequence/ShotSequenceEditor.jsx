@@ -193,16 +193,35 @@ const ShotSequenceEditor = ({ project, onBack }) => {
         setCurrentTime(Math.max(0, Math.min(time, totalDuration)));
     };
 
-    const handleAudioUpload = (e) => {
+    const handleAudioUpload = async (e) => {
         const file = e.target.files[0];
-        if (file) {
-            // In a real app, upload to server. Here we use object URL for demo
-            const url = URL.createObjectURL(file);
-            setAudioUrl(url);
-            saveSequence(frames, url);
+        if (!file) return;
 
-            // Warning: This audio will only work on your device
-            alert('⚠️ Note: Audio is stored locally and will not be shared with collaborators. For full collaboration, audio files need to be uploaded to a server.');
+        try {
+            // Create FormData to send file to server
+            const formData = new FormData();
+            formData.append('audio', file);
+
+            // Upload to server
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/upload/audio`, {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Use the server URL instead of blob URL
+                const serverAudioUrl = `${import.meta.env.VITE_API_URL}${data.audioUrl}`;
+                setAudioUrl(serverAudioUrl);
+                saveSequence(frames, serverAudioUrl);
+                console.log('✅ Audio uploaded successfully:', serverAudioUrl);
+            } else {
+                alert('❌ Failed to upload audio: ' + data.message);
+            }
+        } catch (error) {
+            console.error('Error uploading audio:', error);
+            alert('❌ Failed to upload audio. Please try again.');
         }
     };
 
