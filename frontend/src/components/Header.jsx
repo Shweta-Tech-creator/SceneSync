@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Header.css';
 import AuthModal from './AuthModal';
+import DashboardSlider from './DashboardSlider';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -9,6 +10,7 @@ const Header = ({ viewMode, setViewMode, resetDashboard }) => {
 
 
     const [showAuthModal, setShowAuthModal] = useState(false);
+    const [showDashboard, setShowDashboard] = useState(false);
     const [showProfileDropdown, setShowProfileDropdown] = useState(false);
     const { user, logout } = useAuth();
     const navigate = useNavigate();
@@ -39,6 +41,17 @@ const Header = ({ viewMode, setViewMode, resetDashboard }) => {
             <header className="main-header">
                 <div className="header-container">
                     <div className="header-left">
+                        {location.pathname === '/features' && (
+                            <button
+                                className="hamburger-menu-btn"
+                                onClick={() => setShowDashboard(true)}
+                                aria-label="Open Menu"
+                            >
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                        )}
                         <div className="logo">
                             <div className="logo-text-header">
                                 <span className="word-header scene-header">Scene</span>
@@ -123,6 +136,11 @@ const Header = ({ viewMode, setViewMode, resetDashboard }) => {
                 isOpen={showAuthModal}
                 onClose={() => setShowAuthModal(false)}
                 onAuthSuccess={handleAuthSuccess}
+            />
+
+            <DashboardSlider
+                isOpen={showDashboard}
+                onClose={() => setShowDashboard(false)}
             />
 
 
