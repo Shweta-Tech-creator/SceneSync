@@ -40,17 +40,17 @@ const Canvas = ({ socket, storyboardId, activeTool, color, currentPage, canvasDa
             fabricCanvasRef.current.dispose();
         }
 
-        // Initialize Fabric canvas
+        // Initialize Fabric canvas without forcing any background color
         const canvas = new fabric.Canvas(canvasRef.current, {
             width: 1200,
-            height: 800,
-            backgroundColor: '#ffffff'
+            height: 800
         });
         fabricCanvasRef.current = canvas;
 
         // Load existing canvas data if available (sync load on mount)
         if (canvasData && Object.keys(canvasData).length > 0) {
             canvas.loadFromJSON(canvasData, () => {
+                // Only apply background color if it was explicitly saved
                 const bgColor = canvasData.background || canvasData.backgroundColor;
                 if (bgColor) {
                     canvas.backgroundColor = bgColor;
@@ -60,21 +60,25 @@ const Canvas = ({ socket, storyboardId, activeTool, color, currentPage, canvasDa
             });
         }
 
-        // Listen for canvas modifications
+        // Listen for canvas modifications with debounce
+        let updateTimeout;
         const handleModification = () => {
-            const jsonData = canvas.toJSON();
-            const thumbnail = canvas.toDataURL({
-                format: 'png',
-                quality: 0.5, // Lower quality for thumbnail to save space
-                multiplier: 0.2 // Scale down for thumbnail
-            });
+            clearTimeout(updateTimeout);
+            updateTimeout = setTimeout(() => {
+                const jsonData = canvas.toJSON();
+                const thumbnail = canvas.toDataURL({
+                    format: 'png',
+                    quality: 0.5,
+                    multiplier: 0.2
+                });
 
-            if (onCanvasUpdateRef.current) {
-                onCanvasUpdateRef.current(jsonData, thumbnail);
-            }
-            if (socket) {
-                socket.emit('canvas-update', { storyboardId, data: jsonData });
-            }
+                if (onCanvasUpdateRef.current) {
+                    onCanvasUpdateRef.current(jsonData, thumbnail);
+                }
+                if (socket) {
+                    socket.emit('canvas-update', { storyboardId, data: jsonData });
+                }
+            }, 500); // Debounce for 500ms
         };
 
         canvas.on('object:modified', handleModification);
@@ -82,16 +86,24 @@ const Canvas = ({ socket, storyboardId, activeTool, color, currentPage, canvasDa
         canvas.on('object:removed', handleModification);
         canvas.on('path:created', handleModification);
 
+        // Track drawing state
+        canvas.on('mouse:down', () => setIsDrawing(true));
+        canvas.on('mouse:up', () => setIsDrawing(false));
+
         // Socket listener for remote updates
         if (socket) {
             socket.on('canvas-update', (data) => {
-                canvas.loadFromJSON(data, () => {
-                    canvas.renderAll();
-                });
+                // Only apply remote updates if we're not currently drawing
+                if (!isDrawing) {
+                    canvas.loadFromJSON(data, () => {
+                        canvas.renderAll();
+                    });
+                }
             });
         }
 
         return () => {
+            clearTimeout(updateTimeout);
             canvas.dispose();
         };
     }, [currentPage]);

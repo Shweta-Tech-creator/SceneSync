@@ -126,24 +126,31 @@
     display: block;
     font-size: 0.9rem;
     font-weight: 600;
-    color: #0B2545;
+    color: #0B2545 !important;
     margin-bottom: 0.5rem;
 }
 
 .form-group input {
     width: 100%;
     padding: 0.8rem 1rem;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #0B2545;
     border-radius: 10px;
     font-size: 1rem;
-    color: #0B2545;
+    color: #0B2545 !important;
     transition: all 0.2s;
+    background: #ffffff;
+}
+
+.form-group input::placeholder {
+    color: #0B2545;
+    opacity: 0.6;
 }
 
 .form-group input:focus {
     outline: none;
-    border-color: #0B2545;
-    box-shadow: 0 0 0 3px rgba(11, 37, 69, 0.1);
+    border-color: #1a3b66;
+    background: #1a3b66;
+    box-shadow: 0 0 0 3px rgba(11, 37, 69, 0.3);
 }
 
 .password-input {

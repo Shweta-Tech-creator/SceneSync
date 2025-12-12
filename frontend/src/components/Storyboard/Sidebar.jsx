@@ -93,6 +93,12 @@ const Sidebar = ({ collaborators, comments, onAddComment, project }) => {
 
                         return uniqueCollaborators.map((collab) => {
                             const uniqueKey = collab.user?._id || collab._id || collab.username || Math.random();
+                            console.log('Sidebar: Rendering collaborator:', {
+                                collab,
+                                username: collab.user?.username || collab.username || collab.name,
+                                role: collab.role,
+                                email: collab.user?.email || collab.email
+                            });
                             return (
                                 <div key={uniqueKey} className="collaborator-item">
                                     <div className="collaborator-avatar">
@@ -102,7 +108,7 @@ const Sidebar = ({ collaborators, comments, onAddComment, project }) => {
                                         <div className="collaborator-name">
                                             {collab.user?.username || collab.username || collab.name || 'Unknown User'}
                                         </div>
-                                        <div className="collaborator-status">{collab.role || collab.email || 'Online'}</div>
+                                        <div className="collaborator-status">{collab.role || collab.user?.email || collab.email || 'Online'}</div>
                                     </div>
                                 </div>
                             );

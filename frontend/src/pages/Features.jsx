@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Header from '../components/Header';
 import ProjectDashboard from '../components/ProjectDashboard/ProjectDashboard';
 import StoryboardEditor from '../components/Storyboard/StoryboardEditor';
@@ -8,9 +9,21 @@ import ShotSequenceEditor from '../components/ShotSequence/ShotSequenceEditor';
 import './Features.css';
 
 const Features = () => {
+    const [searchParams] = useSearchParams();
     const [viewMode, setViewMode] = useState('dashboard'); // 'dashboard', 'storyboard', 'script', 'breakdown', 'shotSequence'
     const [dashboardKey, setDashboardKey] = useState(0);
     const [selectedProject, setSelectedProject] = useState(null);
+
+    // Read tab from URL query parameters on mount
+    useEffect(() => {
+        const tab = searchParams.get('tab');
+        if (tab) {
+            setViewMode(tab);
+        } else {
+            // If no tab parameter, default to dashboard
+            setViewMode('dashboard');
+        }
+    }, [searchParams]);
 
     const resetDashboard = () => {
         setDashboardKey(prev => prev + 1);

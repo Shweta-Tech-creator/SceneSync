@@ -82,8 +82,9 @@ io.on('connection', (socket) => {
         console.log(`User ${socket.id} joined script ${scriptId}`);
     });
 
-    socket.on('script-update', ({ scriptId, blocks }) => {
-        socket.to(scriptId).emit('script-update', blocks);
+    socket.on('script-update', ({ scriptId, pages }) => {
+        socket.to(scriptId).emit('script-update', pages);
+        console.log(`Script updated for ${scriptId}`);
     });
 
     // Project Events (for comments and collaboration)
@@ -95,6 +96,49 @@ io.on('connection', (socket) => {
     socket.on('new-comment', ({ projectId, comment }) => {
         socket.to(projectId).emit('new-comment', comment);
         console.log(`New comment in project ${projectId}:`, comment);
+    });
+
+    // Scene Breakdown Events
+    socket.on('join-breakdown', (projectId) => {
+        socket.join(`breakdown-${projectId}`);
+        console.log(`User ${socket.id} joined breakdown for project ${projectId}`);
+    });
+
+    socket.on('breakdown-update', ({ projectId, breakdown }) => {
+        socket.to(`breakdown-${projectId}`).emit('breakdown-update', breakdown);
+        console.log(`Breakdown updated for project ${projectId}`);
+    });
+
+    // Shot Sequence Events
+    socket.on('join-shotsequence', (sequenceId) => {
+        socket.join(`shotsequence-${sequenceId}`);
+        console.log(`User ${socket.id} joined shot sequence ${sequenceId}`);
+    });
+
+    socket.on('shotsequence-update', ({ sequenceId, data }) => {
+        socket.to(`shotsequence-${sequenceId}`).emit('shotsequence-update', data);
+        console.log(`Shot sequence updated: ${sequenceId}`);
+    });
+
+    // Project Dashboard Events (for project list updates)
+    socket.on('join-dashboard', (userId) => {
+        socket.join(`dashboard-${userId}`);
+        console.log(`User ${socket.id} joined dashboard for user ${userId}`);
+    });
+
+    socket.on('project-created', ({ userId, project }) => {
+        io.to(`dashboard-${userId}`).emit('project-created', project);
+        console.log(`New project created for user ${userId}:`, project.title);
+    });
+
+    socket.on('project-updated', ({ projectId, project }) => {
+        io.emit('project-updated', { projectId, project });
+        console.log(`Project updated: ${projectId}`);
+    });
+
+    socket.on('project-deleted', ({ projectId, userId }) => {
+        io.to(`dashboard-${userId}`).emit('project-deleted', projectId);
+        console.log(`Project deleted: ${projectId}`);
     });
 
     socket.on('disconnect', () => {
