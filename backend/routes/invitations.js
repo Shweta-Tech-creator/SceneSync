@@ -60,7 +60,7 @@ router.post('/send-invitation', async (req, res) => {
         const acceptUrl = `${process.env.FRONTEND_URL || 'http://localhost:5174'}/accept-invitation/${invitation.token}`;
 
         const mailOptions = {
-            from: `"${process.env.APP_NAME || 'SceneSync'}" <${process.env.SMTP_USER || process.env.EMAIL_USER}>`,
+            from: `"${process.env.APP_NAME || 'SceneSync'}" <${process.env.EMAIL_USER || process.env.SMTP_USER}>`,
             to: email,
             subject: `You've been invited to collaborate on ${projectName || 'a project'}`,
             html: `
