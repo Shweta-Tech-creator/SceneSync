@@ -200,6 +200,9 @@ const ShotSequenceEditor = ({ project, onBack }) => {
             const url = URL.createObjectURL(file);
             setAudioUrl(url);
             saveSequence(frames, url);
+
+            // Warning: This audio will only work on your device
+            alert('⚠️ Note: Audio is stored locally and will not be shared with collaborators. For full collaboration, audio files need to be uploaded to a server.');
         }
     };
 
