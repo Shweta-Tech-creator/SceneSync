@@ -106,7 +106,6 @@ const Header = ({ viewMode, setViewMode, resetDashboard }) => {
                                         <div className="profile-header">
                                             <div className="profile-name">{user.username || 'User'}</div>
                                             <div className="profile-email">{user.email}</div>
-                                            <div className="profile-role-badge">{user.role || 'Artist'}</div>
                                         </div>
                                         <div className="profile-footer">
                                             <button className="dropdown-logout-btn" onClick={handleLogout}>
