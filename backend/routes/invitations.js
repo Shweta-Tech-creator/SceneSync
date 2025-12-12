@@ -16,7 +16,9 @@ const createTransporter = () => {
             pass: process.env.EMAIL_APP_PASSWORD || process.env.EMAIL_PASS
         },
         family: 4, // Force IPv4
-        pool: true, // Use pooled connections
+        tls: {
+            rejectUnauthorized: false // Bypass SSL verification issues
+        },
         logger: true, // Log SMTP traffic
         debug: true   // Include debug info
     });
