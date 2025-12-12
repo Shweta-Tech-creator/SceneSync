@@ -126,9 +126,9 @@ const Sidebar = ({ collaborators, comments, onAddComment, project }) => {
                     {comments && comments.length > 0 ? (
                         comments.map((comment, index) => (
                             <div key={index} className="comment-item">
-                                <div className="comment-author">{comment.author}</div>
+                                <div className="comment-author">{comment.user?.username || comment.username || 'Anonymous'}</div>
                                 <div className="comment-text">{comment.text}</div>
-                                <div className="comment-time">{comment.time}</div>
+                                <div className="comment-time">{new Date(comment.createdAt).toLocaleString()}</div>
                             </div>
                         ))
                     ) : (
