@@ -69,6 +69,8 @@ const ProjectDashboard = ({ onProjectSelect }) => {
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/projects?userId=${user._id}`);
             const data = await response.json();
             if (data.success) {
+                console.log('Fetched projects:', data.projects);
+                console.log('First project collaborators:', data.projects[0]?.collaborators);
                 setProjects(data.projects);
             }
         } catch (error) {

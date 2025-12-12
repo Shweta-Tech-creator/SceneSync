@@ -190,6 +190,11 @@ const ProjectSidebar = ({ project, currentUser }) => {
         ...uniqueCollaborators
     ]);
 
+    console.log('ProjectSidebar - Project:', project.title);
+    console.log('ProjectSidebar - Raw collaborators:', project.collaborators);
+    console.log('ProjectSidebar - Unique collaborators:', uniqueCollaborators);
+    console.log('ProjectSidebar - All collaborators to render:', allCollaborators);
+
     return (
         <div className="project-sidebar">
             <div className="sidebar-header">
