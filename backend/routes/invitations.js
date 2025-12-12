@@ -11,7 +11,7 @@ const createTransporter = () => {
         service: 'gmail',
         auth: {
             user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_APP_PASSWORD
+            pass: process.env.EMAIL_APP_PASSWORD || process.env.EMAIL_PASS
         }
     });
 };
@@ -101,15 +101,15 @@ router.post('/send-invitation', async (req, res) => {
         });
 
     } catch (error) {
-        console.error('Error sending invitation:', error);
-        console.error('Error details:', {
-            message: error.message,
-            stack: error.stack,
-            name: error.name
-        });
+        console.error('=== EMAIL SENDING ERROR ===');
+        console.error('Error Message:', error.message);
+        console.error('Error Code:', error.code);
+        console.error('Error Command:', error.command);
+        console.error('Stack:', error.stack);
+
         res.status(500).json({
             success: false,
-            message: 'Failed to send invitation',
+            message: 'Failed to send invitation. Please check server logs for details.',
             error: error.message
         });
     }
