@@ -53,7 +53,10 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/scenecraft'
 // Socket.io Logic
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/invitations', invitationsRoutes);
+app.use('/api/invitations', (req, res, next) => {
+    console.log(`[DEBUG] Entering invitations router: ${req.method} ${req.url}`);
+    next();
+}, invitationsRoutes);
 app.use('/api/stats', statsRoutes);
 app.use('/api/projects', require('./routes/projects'));
 app.use('/api/scripts', require('./routes/scriptRoutes'));
