@@ -8,16 +8,18 @@ const User = require('../models/User');
 // Create email transporter
 // Create email transporter
 // Create email transporter
+// Create email transporter
 const createTransporter = () => {
     return nodemailer.createTransport({
-        service: 'gmail',
+        host: process.env.SMTP_HOST || 'smtp.gmail.com',
+        port: process.env.SMTP_PORT || 587,
+        secure: false, // true for 465, false for other ports
         auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_APP_PASSWORD || process.env.EMAIL_PASS
+            user: process.env.SMTP_USER || process.env.EMAIL_USER,
+            pass: process.env.SMTP_PASS || process.env.EMAIL_APP_PASSWORD || process.env.EMAIL_PASS
         },
-        family: 4, // Force IPv4
         tls: {
-            rejectUnauthorized: false // Bypass SSL verification issues
+            rejectUnauthorized: false // Bypass SSL verification issues if needed
         },
         logger: true, // Log SMTP traffic
         debug: true   // Include debug info
@@ -54,91 +56,70 @@ router.post('/send-invitation', async (req, res) => {
 
         await invitation.save();
 
+        const transporter = createTransporter();
         const acceptUrl = `${process.env.FRONTEND_URL || 'http://localhost:5174'}/accept-invitation/${invitation.token}`;
-        let emailSent = false;
 
-        try {
-            // Create transporter with short timeout to fail fast if blocked
-            const transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                    user: process.env.EMAIL_USER,
-                    pass: process.env.EMAIL_APP_PASSWORD || process.env.EMAIL_PASS
-                },
-                connectionTimeout: 3000, // 3 seconds timeout
-                greetingTimeout: 3000
-            });
-
-            const mailOptions = {
-                from: `"${process.env.APP_NAME || 'SceneSync'}" <${process.env.EMAIL_USER}>`,
-                to: email,
-                subject: `You've been invited to collaborate on ${projectName || 'a project'}`,
-                html: `
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <style>
-                            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-                            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-                            .header { background: linear-gradient(135deg, #0B2545 0%, #1a3a5c 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
-                            .header h1 { margin: 0; color: #ffd700; }
-                            .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
-                            .button { display: inline-block; background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); color: #0B2545; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; margin: 20px 0; }
-                            .footer { text-align: center; margin-top: 20px; color: #666; font-size: 12px; }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="container">
-                            <div class="header">
-                                <h1>🎬 SceneSync Invitation</h1>
-                            </div>
-                            <div class="content">
-                                <h2>You've been invited to collaborate!</h2>
-                                <p><strong>${inviterName || 'A team member'}</strong> has invited you to collaborate on <strong>${projectName || 'a project'}</strong> on SceneSync.</p>
-                                
-                                <p>SceneSync is a collaborative storyboard editor that lets you create, edit, and share storyboards in real-time with your team.</p>
-                                
-                                <center>
-                                    <a href="${acceptUrl}" class="button">
-                                        Accept Invitation
-                                    </a>
-                                </center>
-                                
-                                <p>If you don't have an account yet, you'll be able to create one when you click the button above.</p>
-                                
-                                <p>Happy collaborating!</p>
-                                <p>- The SceneSync Team</p>
-                            </div>
-                            <div class="footer">
-                                <p>This invitation was sent to ${email}. If you didn't expect this email, you can safely ignore it.</p>
-                            </div>
+        const mailOptions = {
+            from: `"${process.env.APP_NAME || 'SceneSync'}" <${process.env.SMTP_USER || process.env.EMAIL_USER}>`,
+            to: email,
+            subject: `You've been invited to collaborate on ${projectName || 'a project'}`,
+            html: `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <style>
+                        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                        .header { background: linear-gradient(135deg, #0B2545 0%, #1a3a5c 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+                        .header h1 { margin: 0; color: #ffd700; }
+                        .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
+                        .button { display: inline-block; background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); color: #0B2545; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; margin: 20px 0; }
+                        .footer { text-align: center; margin-top: 20px; color: #666; font-size: 12px; }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <div class="header">
+                            <h1>🎬 SceneSync Invitation</h1>
                         </div>
-                    </body>
-                    </html>
-                `
-            };
+                        <div class="content">
+                            <h2>You've been invited to collaborate!</h2>
+                            <p><strong>${inviterName || 'A team member'}</strong> has invited you to collaborate on <strong>${projectName || 'a project'}</strong> on SceneSync.</p>
+                            
+                            <p>SceneSync is a collaborative storyboard editor that lets you create, edit, and share storyboards in real-time with your team.</p>
+                            
+                            <center>
+                                <a href="${acceptUrl}" class="button">
+                                    Accept Invitation
+                                </a>
+                            </center>
+                            
+                            <p>If you don't have an account yet, you'll be able to create one when you click the button above.</p>
+                            
+                            <p>Happy collaborating!</p>
+                            <p>- The SceneSync Team</p>
+                        </div>
+                        <div class="footer">
+                            <p>This invitation was sent to ${email}. If you didn't expect this email, you can safely ignore it.</p>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `
+        };
 
-            await transporter.sendMail(mailOptions);
-            emailSent = true;
-        } catch (emailErr) {
-            console.error('Email sending failed (likely blocked), falling back to link:', emailErr.message);
-            // Ignore error and return link
-        }
+        await transporter.sendMail(mailOptions);
 
         res.json({
             success: true,
-            message: emailSent
-                ? `Invitation sent successfully to ${email}`
-                : `Invitation created! Share this link manually: ${acceptUrl}`,
-            invitationLink: acceptUrl,
-            emailSent: emailSent
+            message: `Invitation sent successfully to ${email}`
         });
 
     } catch (error) {
         console.error('Invitation error:', error);
         res.status(500).json({
             success: false,
-            message: 'Failed to create invitation',
+            message: 'Failed to send invitation',
             error: error.message
         });
     }
