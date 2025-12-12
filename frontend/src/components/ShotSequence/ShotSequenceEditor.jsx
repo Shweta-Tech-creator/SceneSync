@@ -197,26 +197,34 @@ const ShotSequenceEditor = ({ project, onBack }) => {
         const file = e.target.files[0];
         if (!file) return;
 
+        console.log('📤 Uploading audio file:', file.name);
+
         try {
             // Create FormData to send file to server
             const formData = new FormData();
             formData.append('audio', file);
 
             // Upload to server
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/upload/audio`, {
+            const uploadUrl = `${import.meta.env.VITE_API_URL}/api/upload/audio`;
+            console.log('Upload URL:', uploadUrl);
+
+            const response = await fetch(uploadUrl, {
                 method: 'POST',
                 body: formData
             });
 
             const data = await response.json();
+            console.log('Upload response:', data);
 
             if (data.success) {
                 // Use the server URL instead of blob URL
                 const serverAudioUrl = `${import.meta.env.VITE_API_URL}${data.audioUrl}`;
+                console.log('✅ Audio uploaded! Server URL:', serverAudioUrl);
                 setAudioUrl(serverAudioUrl);
                 saveSequence(frames, serverAudioUrl);
-                console.log('✅ Audio uploaded successfully:', serverAudioUrl);
+                alert('✅ Audio uploaded successfully!');
             } else {
+                console.error('Upload failed:', data);
                 alert('❌ Failed to upload audio: ' + data.message);
             }
         } catch (error) {
