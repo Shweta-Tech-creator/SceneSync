@@ -116,8 +116,11 @@ const ScriptEditor = ({ projectId, onBack }) => {
             }
         });
 
-        newSocket.on('script-update', (updatedPages) => {
-            setPages(updatedPages);
+        newSocket.on('script-update', (data) => {
+            setPages(data.pages);
+            if (data.pageColor !== undefined) {
+                setPageColor(data.pageColor);
+            }
         });
 
         return () => newSocket.close();
@@ -177,6 +180,17 @@ const ScriptEditor = ({ projectId, onBack }) => {
         fetchStoryboard();
     }, [projectId]);
 
+    // Auto-save and emit socket event when pageColor changes
+    useEffect(() => {
+        if (!projectId || !socket) return;
+
+        // Emit socket event for real-time sync
+        socket.emit('script-update', { scriptId: projectId, pages, pageColor });
+
+        // Auto-save to database
+        saveScript(false);
+    }, [pageColor]);
+
     // Fetch comments
     useEffect(() => {
         if (!projectId) return;
@@ -228,7 +242,7 @@ const ScriptEditor = ({ projectId, onBack }) => {
 
     const updatePages = (newPages) => {
         setPages(newPages);
-        if (socket && projectId) socket.emit('script-update', { scriptId: projectId, pages: newPages });
+        if (socket && projectId) socket.emit('script-update', { scriptId: projectId, pages: newPages, pageColor });
     };
 
     const updateBlock = (id, content) => {
