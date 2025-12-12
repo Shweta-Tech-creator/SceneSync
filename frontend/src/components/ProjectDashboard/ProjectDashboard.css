@@ -532,7 +532,7 @@
 }
 
 .project-dashboard-modal-content h2 {
-    color: #f1f5f9;
+    color: #ffffff;
     margin-top: 0;
     margin-bottom: 2rem;
     font-size: 1.75rem;
@@ -552,7 +552,7 @@
 
 .project-dashboard-modal-content .role-description p {
     margin: 0;
-    color: #e2e8f0;
+    color: #ffffff;
     font-size: 0.95rem;
     line-height: 1.6;
     display: flex;
@@ -568,7 +568,7 @@
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 600;
-    color: #cbd5e1;
+    color: #ffffff !important;
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -587,6 +587,11 @@
     appearance: none;
     /* Remove default arrow */
     -webkit-appearance: none;
+}
+
+.project-dashboard-modal-content .form-group input::placeholder,
+.project-dashboard-modal-content .form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.5);
 }
 
 /* Custom arrow for select */
