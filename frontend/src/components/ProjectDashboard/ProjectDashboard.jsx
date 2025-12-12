@@ -30,6 +30,17 @@ const ProjectDashboard = ({ onProjectSelect }) => {
         }
     }, [user]);
 
+    // Check for refresh parameter (from invitation acceptance)
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('refresh') === 'true' && user) {
+            console.log('Refresh parameter detected, refetching projects...');
+            fetchProjects();
+            // Clean up the URL
+            window.history.replaceState({}, '', window.location.pathname);
+        }
+    }, [user]);
+
     // Refetch selected project when it changes to get updated collaborators
     useEffect(() => {
         if (selectedProject) {

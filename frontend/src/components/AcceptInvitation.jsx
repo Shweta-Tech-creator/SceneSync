@@ -127,12 +127,12 @@ const AcceptInvitation = () => {
                 // Clear the pending token
                 sessionStorage.removeItem('pendingInvitationToken');
 
-                // Redirect to dashboard after 4 seconds
-                console.log('Will redirect in 4 seconds...');
+                // Redirect to dashboard after 2 seconds with refresh flag
+                console.log('Will redirect in 2 seconds...');
                 setTimeout(() => {
                     console.log('Redirecting to features page...');
-                    navigate('/features');
-                }, 4000);
+                    navigate('/features?refresh=true');
+                }, 2000);
             } else {
                 console.error('Invitation acceptance failed:', data.message);
                 setStatus('error');
