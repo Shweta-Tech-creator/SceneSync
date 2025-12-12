@@ -4,7 +4,7 @@
 
 **A collaborative film pre-production platform for modern filmmakers**
 
-[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-Visit_SceneSync-success?style=for-the-badge)](https://scene-sync-frontend.vercel.app)
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-Visit_SceneSync-success?style=for-the-badge)](scene-sync-tau.vercel.app)
 [![Backend API](https://img.shields.io/badge/🔗_API-Backend_Server-informational?style=for-the-badge)](https://scenesync-backend.onrender.com)
 
 [![React](https://img.shields.io/badge/React-18.3.1-61DAFB?style=flat&logo=react)](https://reactjs.org/)
@@ -140,7 +140,5 @@ MIT License - see [LICENSE](LICENSE) file
 **⭐ Star this repo if you find it helpful!**
 
 [![GitHub stars](https://img.shields.io/github/stars/Shweta-Tech-creator/SceneSync?style=social)](https://github.com/Shweta-Tech-creator/SceneSync/stargazers)
-
-Made with ❤️ by Shweta Kadam
 
 </div>
