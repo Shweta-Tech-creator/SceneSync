@@ -14,13 +14,18 @@ cloudinary.config({
 // Configure multer to use memory storage (no disk writes)
 const storage = multer.memoryStorage();
 
-// File filter to only allow audio files
+// File filter to allow audio and image files
 const fileFilter = (req, file, cb) => {
-    const allowedMimes = ['audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/ogg', 'audio/webm', 'audio/mp4'];
+    const allowedMimes = [
+        // Audio
+        'audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/ogg', 'audio/webm', 'audio/mp4',
+        // Images
+        'image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'
+    ];
     if (allowedMimes.includes(file.mimetype)) {
         cb(null, true);
     } else {
-        cb(new Error('Invalid file type. Only audio files are allowed.'), false);
+        cb(new Error('Invalid file type. Only audio and image files are allowed.'), false);
     }
 };
 
@@ -87,6 +92,56 @@ router.post('/audio', upload.single('audio'), async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Failed to upload audio',
+            error: error.message
+        });
+    }
+});
+
+// Image upload endpoint for storyboards
+router.post('/image', upload.single('image'), async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: 'No image file uploaded'
+            });
+        }
+
+        console.log('Uploading image to Cloudinary:', req.file.originalname);
+
+        // Upload to Cloudinary
+        const result = await new Promise((resolve, reject) => {
+            const uploadStream = cloudinary.uploader.upload_stream(
+                {
+                    resource_type: 'image',
+                    folder: 'scenesync/storyboards',
+                    public_id: `storyboard_${Date.now()}`,
+                },
+                (error, result) => {
+                    if (error) reject(error);
+                    else resolve(result);
+                }
+            );
+
+            const readableStream = Readable.from(req.file.buffer);
+            readableStream.pipe(uploadStream);
+        });
+
+        console.log('Cloudinary image upload successful:', result.secure_url);
+
+        res.json({
+            success: true,
+            message: 'Image uploaded successfully',
+            imageUrl: result.secure_url,
+            filename: req.file.originalname,
+            size: req.file.size,
+            cloudinaryId: result.public_id
+        });
+    } catch (error) {
+        console.error('Error uploading image:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to upload image',
             error: error.message
         });
     }
