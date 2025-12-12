@@ -124,7 +124,16 @@ const ProjectSidebar = ({ project, currentUser }) => {
                 console.log('Response data:', data);
 
                 if (data.success) {
-                    alert(`✅ ${data.message}`);
+                    if (data.invitationLink && !data.emailSent) {
+                        // Email failed but link generated
+                        const copyLink = window.confirm(`⚠️ Email server blocked, but invitation created!\n\nClick OK to copy the link:\n${data.invitationLink}`);
+                        if (copyLink) {
+                            navigator.clipboard.writeText(data.invitationLink);
+                            alert('Link copied to clipboard!');
+                        }
+                    } else {
+                        alert(`✅ ${data.message}`);
+                    }
                 } else {
                     const errorMsg = data.message || data.error || 'Unknown error occurred';
                     alert(`❌ ${errorMsg}`);
