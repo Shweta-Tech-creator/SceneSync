@@ -10,19 +10,15 @@ const User = require('../models/User');
 // Create email transporter
 const createTransporter = () => {
     return nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true, // use SSL
+        service: 'gmail',
         auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_APP_PASSWORD || process.env.EMAIL_PASS
         },
         family: 4, // Force IPv4
+        pool: true, // Use pooled connections
         logger: true, // Log SMTP traffic
-        debug: true,   // Include debug info
-        connectionTimeout: 10000, // 10 seconds
-        greetingTimeout: 5000,    // 5 seconds
-        socketTimeout: 10000      // 10 seconds
+        debug: true   // Include debug info
     });
 };
 
