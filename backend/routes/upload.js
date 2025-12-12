@@ -1,26 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
+const { Readable } = require('stream');
 
-// Create uploads directory if it doesn't exist
-const uploadsDir = path.join(__dirname, '../uploads/audio');
-if (!fs.existsSync(uploadsDir)) {
-    fs.mkdirSync(uploadsDir, { recursive: true });
-}
-
-// Configure multer storage
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, uploadsDir);
-    },
-    filename: (req, file, cb) => {
-        // Generate unique filename: timestamp-randomstring-originalname
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, uniqueSuffix + path.extname(file.originalname));
-    }
+// Configure Cloudinary
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
 });
+
+// Configure multer to use memory storage (no disk writes)
+const storage = multer.memoryStorage();
 
 // File filter to only allow audio files
 const fileFilter = (req, file, cb) => {
@@ -40,8 +32,33 @@ const upload = multer({
     }
 });
 
+// Helper function to upload buffer to Cloudinary
+const uploadToCloudinary = (buffer, filename) => {
+    return new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+            {
+                resource_type: 'video', // Cloudinary uses 'video' for audio files
+                folder: 'scenesync/audio',
+                public_id: `audio_${Date.now()}`,
+                format: 'mp3' // Convert to mp3 for compatibility
+            },
+            (error, result) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(result);
+                }
+            }
+        );
+
+        // Convert buffer to stream and pipe to Cloudinary
+        const readableStream = Readable.from(buffer);
+        readableStream.pipe(uploadStream);
+    });
+};
+
 // Audio upload endpoint
-router.post('/audio', upload.single('audio'), (req, res) => {
+router.post('/audio', upload.single('audio'), async (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({
@@ -50,15 +67,20 @@ router.post('/audio', upload.single('audio'), (req, res) => {
             });
         }
 
-        // Generate public URL for the uploaded file
-        const audioUrl = `/uploads/audio/${req.file.filename}`;
+        console.log('Uploading audio to Cloudinary:', req.file.originalname);
+
+        // Upload to Cloudinary
+        const result = await uploadToCloudinary(req.file.buffer, req.file.originalname);
+
+        console.log('Cloudinary upload successful:', result.secure_url);
 
         res.json({
             success: true,
             message: 'Audio uploaded successfully',
-            audioUrl: audioUrl,
-            filename: req.file.filename,
-            size: req.file.size
+            audioUrl: result.secure_url, // Direct Cloudinary URL
+            filename: req.file.originalname,
+            size: req.file.size,
+            cloudinaryId: result.public_id
         });
     } catch (error) {
         console.error('Error uploading audio:', error);

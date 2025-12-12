@@ -217,12 +217,12 @@ const ShotSequenceEditor = ({ project, onBack }) => {
             console.log('Upload response:', data);
 
             if (data.success) {
-                // Use the server URL instead of blob URL
-                const serverAudioUrl = `${import.meta.env.VITE_API_URL}${data.audioUrl}`;
-                console.log('✅ Audio uploaded! Server URL:', serverAudioUrl);
-                setAudioUrl(serverAudioUrl);
-                saveSequence(frames, serverAudioUrl);
-                alert('✅ Audio uploaded successfully!');
+                // Use the Cloudinary URL directly (no need to prepend API URL)
+                const cloudinaryUrl = data.audioUrl;
+                console.log('✅ Audio uploaded to Cloudinary:', cloudinaryUrl);
+                setAudioUrl(cloudinaryUrl);
+                saveSequence(frames, cloudinaryUrl);
+                alert('✅ Audio uploaded successfully! Collaborators can now hear it.');
             } else {
                 console.error('Upload failed:', data);
                 alert('❌ Failed to upload audio: ' + data.message);
