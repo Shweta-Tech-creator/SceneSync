@@ -19,8 +19,15 @@ const createTransporter = () => {
     });
 };
 
+// Debug middleware for this router
+router.use((req, res, next) => {
+    console.log(`[DEBUG] Inside invitations.js: ${req.method} ${req.url}`);
+    next();
+});
+
 // Send invitation email
 router.post('/send-invitation', async (req, res) => {
+    console.log('[DEBUG] Matched /send-invitation route handler!');
     try {
         const { email, inviterName, projectName, projectId, role } = req.body;
 
