@@ -124,16 +124,7 @@ const ProjectSidebar = ({ project, currentUser }) => {
                 console.log('Response data:', data);
 
                 if (data.success) {
-                    if (data.invitationLink && !data.emailSent) {
-                        // Email failed but link generated
-                        const copyLink = window.confirm(`⚠️ Email failed to send, but the invitation was created.\n\nClick OK to copy the invitation link to your clipboard:\n${data.invitationLink}`);
-                        if (copyLink) {
-                            navigator.clipboard.writeText(data.invitationLink);
-                            alert('Link copied to clipboard! You can send it manually.');
-                        }
-                    } else {
-                        alert(`✅ ${data.message}`);
-                    }
+                    alert(`✅ ${data.message}`);
                 } else {
                     const errorMsg = data.message || data.error || 'Unknown error occurred';
                     alert(`❌ ${errorMsg}`);

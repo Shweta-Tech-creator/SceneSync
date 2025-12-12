@@ -9,17 +9,12 @@ const User = require('../models/User');
 // Create email transporter
 const createTransporter = async () => {
     const transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 587,
-        secure: false, // use STARTTLS
+        service: 'gmail',
         auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_APP_PASSWORD || process.env.EMAIL_PASS
         },
-        // Add timeout settings
-        connectionTimeout: 10000, // 10 seconds
-        greetingTimeout: 5000,    // 5 seconds
-        socketTimeout: 10000      // 10 seconds
+        family: 4 // Force IPv4 to avoid timeouts
     });
 
     // Verify connection configuration
@@ -58,17 +53,14 @@ router.post('/send-invitation', async (req, res) => {
 
         await invitation.save();
 
+        const transporter = await createTransporter();
         const acceptUrl = `${process.env.FRONTEND_URL || 'http://localhost:5174'}/accept-invitation/${invitation.token}`;
-        let emailSent = false;
-        let emailError = null;
 
-        try {
-            const transporter = await createTransporter();
-            const mailOptions = {
-                from: `"${process.env.APP_NAME || 'SceneSync'}" <${process.env.EMAIL_USER}>`,
-                to: email,
-                subject: `You've been invited to collaborate on ${projectName || 'a project'}`,
-                html: `
+        const mailOptions = {
+            from: `"${process.env.APP_NAME || 'SceneSync'}" <${process.env.EMAIL_USER}>`,
+            to: email,
+            subject: `You've been invited to collaborate on ${projectName || 'a project'}`,
+            html: `
                 <!DOCTYPE html>
                 <html>
                 <head>
@@ -111,34 +103,25 @@ router.post('/send-invitation', async (req, res) => {
                 </body>
                 </html>
             `
-            };
+        };
 
-            await transporter.sendMail(mailOptions);
-            emailSent = true;
-        } catch (emailErr) {
-            console.error('=== EMAIL SENDING FAILED (NON-FATAL) ===');
-            console.error('Error:', emailErr.message);
-            emailError = emailErr.message;
-            // Continue execution to return the link
-        }
+        await transporter.sendMail(mailOptions);
 
         res.json({
             success: true,
-            message: emailSent
-                ? `Invitation sent successfully to ${email}`
-                : `Invitation created, but email failed. Please share the link manually.`,
-            invitationLink: acceptUrl,
-            emailSent: emailSent,
-            emailError: emailError
+            message: `Invitation sent successfully to ${email}`
         });
 
     } catch (error) {
-        console.error('=== FATAL INVITATION ERROR ===');
-        console.error('Error:', error.message);
+        console.error('=== EMAIL SENDING ERROR ===');
+        console.error('Error Message:', error.message);
+        console.error('Error Code:', error.code);
+        console.error('Error Command:', error.command);
+        console.error('Stack:', error.stack);
 
         res.status(500).json({
             success: false,
-            message: 'Failed to create invitation',
+            message: 'Failed to send invitation. Please check server logs for details.',
             error: error.message
         });
     }
