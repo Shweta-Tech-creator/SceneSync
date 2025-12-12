@@ -6,14 +6,31 @@ const Project = require('../models/Project');
 const User = require('../models/User');
 
 // Create email transporter
-const createTransporter = () => {
-    return nodemailer.createTransport({
-        service: 'gmail',
+// Create email transporter
+const createTransporter = async () => {
+    const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true, // use SSL
         auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_APP_PASSWORD || process.env.EMAIL_PASS
-        }
+        },
+        // Add timeout settings
+        connectionTimeout: 10000, // 10 seconds
+        greetingTimeout: 5000,    // 5 seconds
+        socketTimeout: 10000      // 10 seconds
     });
+
+    // Verify connection configuration
+    try {
+        await transporter.verify();
+        console.log('SMTP Connection verified successfully');
+        return transporter;
+    } catch (error) {
+        console.error('SMTP Connection Verification Failed:', error);
+        throw error;
+    }
 };
 
 // Send invitation email
@@ -41,7 +58,7 @@ router.post('/send-invitation', async (req, res) => {
 
         await invitation.save();
 
-        const transporter = createTransporter();
+        const transporter = await createTransporter();
         const acceptUrl = `${process.env.FRONTEND_URL || 'http://localhost:5174'}/accept-invitation/${invitation.token}`;
 
         const mailOptions = {
