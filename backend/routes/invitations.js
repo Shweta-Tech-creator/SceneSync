@@ -10,12 +10,16 @@ const User = require('../models/User');
 // Create email transporter
 const createTransporter = () => {
     return nodemailer.createTransport({
-        service: 'gmail',
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false, // use STARTTLS
         auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_APP_PASSWORD || process.env.EMAIL_PASS
         },
-        family: 4 // Force IPv4 to avoid timeouts
+        family: 4, // Force IPv4
+        logger: true, // Log SMTP traffic
+        debug: true   // Include debug info
     });
 };
 
