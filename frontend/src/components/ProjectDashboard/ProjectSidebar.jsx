@@ -248,7 +248,7 @@ const ProjectSidebar = ({ project, currentUser }) => {
                         comments.map((commentItem, index) => (
                             <div key={index} className="comment-item">
                                 <div className="comment-author">
-                                    {commentItem.username || commentItem.user?.username || 'Unknown User'}
+                                    {commentItem.user?.username || commentItem.username || 'Unknown User'}
                                 </div>
                                 <div className="comment-text">{commentItem.text}</div>
                                 <div className="comment-time">{formatTime(commentItem.createdAt)}</div>
