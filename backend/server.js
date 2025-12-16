@@ -9,6 +9,7 @@ const authRoutes = require('./routes/auth');
 const invitationsRoutes = require('./routes/invitations');
 const statsRoutes = require('./routes/stats');
 const uploadRoutes = require('./routes/upload');
+const contactRoutes = require('./routes/contactRoutes');
 
 // Import passport config
 require('./config/passport');
@@ -64,6 +65,7 @@ app.use('/api/invitations', (req, res, next) => {
 }, invitationsRoutes);
 app.use('/api/stats', statsRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/contact', contactRoutes);
 app.use('/api/projects', require('./routes/projects'));
 app.use('/api/scripts', require('./routes/scriptRoutes'));
 app.use('/api/breakdown', require('./routes/breakdownRoutes'));

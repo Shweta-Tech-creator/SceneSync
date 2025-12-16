@@ -1,7 +1,73 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import './ContactUs.css';
 
 const ContactUs = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [status, setStatus] = useState({
+    loading: false,
+    success: false,
+    error: null
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.type === 'email' ? 'email' : e.target.type === 'text' && e.target.placeholder === 'Subject' ? 'subject' : e.target.placeholder === 'Your Name' ? 'name' : 'message']: e.target.value
+    });
+  };
+
+  // Improved handleChange to be more robust based on name attribute which we should add
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus({ loading: true, success: false, error: null });
+
+    try {
+      // Using relative path assuming proxy or same origin, otherwise needs process.env.REACT_APP_API_URL or similar
+      // But based on server.js cors config: origin: [process.env.FRONTEND_URL, 'http://localhost:5173', 'http://localhost:5174']
+      // The generic practice here without a configured axios instance is often to trust the proxy or hardcode for dev if needed.
+      // Given the user context, let's try a direct call or rely on a base URL if we knew one.
+      // Looking at other files might help but standard practice is /api/...
+      // Let's assume the backend runs on port 3000 as seen in server.js.
+      // The frontend likely runs on 5173.
+      // We should use the full URL if we aren't sure about proxy, or relative if there is a proxy.
+      // Let's check if there's a config. Assuming localhost:3000 for now based on server.js
+
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'; // Common Vite pattern
+
+      await axios.post(`${API_URL}/api/contact`, formData);
+
+      setStatus({ loading: false, success: true, error: null });
+      setFormData({ name: '', email: '', subject: '', message: '' });
+
+      // Clear success message after 5 seconds
+      setTimeout(() => {
+        setStatus(prev => ({ ...prev, success: false }));
+      }, 5000);
+
+    } catch (err) {
+      console.error('Contact form error:', err);
+      setStatus({
+        loading: false,
+        success: false,
+        error: err.response?.data?.message || 'Something went wrong. Please try again.'
+      });
+    }
+  };
+
   return (
     <>
       <section id="contact" className="contact-section">
@@ -17,41 +83,68 @@ const ContactUs = () => {
           <div className="contact-container">
             {/* Left Column - Contact Form */}
             <div className="contact-form-container">
-              <form className="contact-form">
+              <form className="contact-form" onSubmit={handleSubmit}>
+                {status.success && (
+                  <div className="alert success-alert" style={{ padding: '10px', marginBottom: '15px', backgroundColor: '#d4edda', color: '#155724', borderRadius: '4px' }}>
+                    Message sent successfully!
+                  </div>
+                )}
+                {status.error && (
+                  <div className="alert error-alert" style={{ padding: '10px', marginBottom: '15px', backgroundColor: '#f8d7da', color: '#721c24', borderRadius: '4px' }}>
+                    {status.error}
+                  </div>
+                )}
+
                 <div className="form-group">
                   <input
                     type="text"
+                    name="name"
                     className="form-input"
                     placeholder="Your Name"
+                    value={formData.name}
+                    onChange={handleInputChange}
                     required
+                    disabled={status.loading}
                   />
                 </div>
                 <div className="form-group">
                   <input
                     type="email"
+                    name="email"
                     className="form-input"
                     placeholder="Your Email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     required
+                    disabled={status.loading}
                   />
                 </div>
                 <div className="form-group">
                   <input
                     type="text"
+                    name="subject"
                     className="form-input"
                     placeholder="Subject"
+                    value={formData.subject}
+                    onChange={handleInputChange}
                     required
+                    disabled={status.loading}
                   />
                 </div>
                 <div className="form-group">
                   <textarea
+                    name="message"
                     className="form-input form-textarea"
                     placeholder="Your Message"
                     rows="4"
+                    value={formData.message}
+                    onChange={handleInputChange}
                     required
+                    disabled={status.loading}
                   ></textarea>
                 </div>
-                <button type="submit" className="send-button">
-                  Send Message
+                <button type="submit" className="send-button" disabled={status.loading}>
+                  {status.loading ? 'Sending...' : 'Send Message'}
                 </button>
               </form>
             </div>
