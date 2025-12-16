@@ -7,49 +7,51 @@ const User = require('../models/User');
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "/api/auth/google/callback"
+    callbackURL: `${process.env.BACKEND_URL || 'http://localhost:3000'}/api/auth/google/callback`,
+    proxy: true
 },
-async (accessToken, refreshToken, profile, done) => {
-    try {
-        // Extract user info from Google profile
-        const googleUser = {
-            googleId: profile.id,
-            displayName: profile.displayName,
-            email: profile.emails[0].value,
-            photo: profile.photos[0].value
-        };
-        
-        return done(null, googleUser);
-    } catch (error) {
-        console.error('Google OAuth strategy error:', error);
-        return done(error, null);
+    async (accessToken, refreshToken, profile, done) => {
+        try {
+            // Extract user info from Google profile
+            const googleUser = {
+                googleId: profile.id,
+                displayName: profile.displayName,
+                email: profile.emails[0].value,
+                photo: profile.photos[0].value
+            };
+
+            return done(null, googleUser);
+        } catch (error) {
+            console.error('Google OAuth strategy error:', error);
+            return done(error, null);
+        }
     }
-}
 ));
 
 // GitHub OAuth Strategy
 passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: "/api/auth/github/callback"
+    callbackURL: `${process.env.BACKEND_URL || 'http://localhost:3000'}/api/auth/github/callback`,
+    proxy: true
 },
-async (accessToken, refreshToken, profile, done) => {
-    try {
-        // Extract user info from GitHub profile
-        const githubUser = {
-            githubId: profile.id,
-            displayName: profile.displayName || profile.username,
-            username: profile.username,
-            email: profile.emails?.[0]?.value || `${profile.username}@github.com`,
-            photo: profile.photos?.[0]?.value
-        };
-        
-        return done(null, githubUser);
-    } catch (error) {
-        console.error('GitHub OAuth strategy error:', error);
-        return done(error, null);
+    async (accessToken, refreshToken, profile, done) => {
+        try {
+            // Extract user info from GitHub profile
+            const githubUser = {
+                githubId: profile.id,
+                displayName: profile.displayName || profile.username,
+                username: profile.username,
+                email: profile.emails?.[0]?.value || `${profile.username}@github.com`,
+                photo: profile.photos?.[0]?.value
+            };
+
+            return done(null, githubUser);
+        } catch (error) {
+            console.error('GitHub OAuth strategy error:', error);
+            return done(error, null);
+        }
     }
-}
 ));
 
 module.exports = passport;
