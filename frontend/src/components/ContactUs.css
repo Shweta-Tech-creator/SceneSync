@@ -93,7 +93,7 @@
 .form-input {
   width: 100%;
   padding: 1rem 1.5rem;
-  border: 2px solid #000000 !important;
+  border: 2px solid #6b7280 !important;
   border-radius: 12px;
   font-size: 1rem;
   font-family: inherit;
@@ -121,7 +121,7 @@
   color: #000000 !important;
   font-weight: 700 !important;
   padding: 1rem 1.5rem;
-  border: 2px solid #000000 !important;
+  border: 2px solid #6b7280 !important;
   border-radius: 12px;
   background: #ffffff;
   font-size: 1rem;
