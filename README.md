@@ -4,7 +4,7 @@
 
 **A collaborative film pre-production platform for modern filmmakers**
 
-[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-Visit_SceneSync-success?style=for-the-badge)](https://scene-sync-tau.vercel.app)
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-Visit_SceneSync-success?style=for-the-badge)](https://scene-sync-i17kbmmfz-kadamsweta92-4303s-projects.vercel.app/)
 [![Backend API](https://img.shields.io/badge/🔗_API-Backend_Server-informational?style=for-the-badge)](https://scenesync-backend.onrender.com)
 
 [![React](https://img.shields.io/badge/React-18.3.1-61DAFB?style=flat&logo=react)](https://reactjs.org/)
